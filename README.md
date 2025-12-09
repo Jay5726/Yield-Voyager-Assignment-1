@@ -2,7 +2,7 @@
 
 A decentralized-hybrid social network application where users log in using their Ethereum Wallet (MetaMask) instead of traditional email/password credentials. The application creates a real-time social graph, allowing users to discover other wallets and manage friend connections via a secure request system.
 
-## 🚀 Project Overview
+## Project Overview
 
 This project demonstrates the integration of **Web3 Authentication** with **Web2 Cloud Storage**. It serves as a Minimum Viable Product (MVP) for a decentralized social directory.
 
@@ -12,7 +12,7 @@ This project demonstrates the integration of **Web3 Authentication** with **Web2
 - **Real-time Database:** Instant updates using Firebase Firestore.
 - **Social Graph:** Mutual friend connections stored on the cloud.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend Library:** React.js (Create React App)
 - **Language:** JavaScript (ES6+, Async/Await)
@@ -23,7 +23,7 @@ This project demonstrates the integration of **Web3 Authentication** with **Web2
 
 ---
 
-## ⚙️ Features & Implementation Details
+## Features & Implementation Details
 
 ### 1. Decentralized Authentication (Login)
 
@@ -52,7 +52,7 @@ This project demonstrates the integration of **Web3 Authentication** with **Web2
 
 ---
 
-## 📂 Database Structure (NoSQL)
+## Database Structure (NoSQL)
 
 The data is stored in a single Firestore collection named `users`.
 
