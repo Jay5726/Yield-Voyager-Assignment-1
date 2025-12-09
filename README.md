@@ -1,71 +1,67 @@
-# Getting Started with Create React App
+# Web3 Social Graph (MVP)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A decentralized-hybrid social network application where users log in using their Ethereum Wallet (MetaMask) instead of traditional email/password credentials. The application creates a real-time social graph, allowing users to discover other wallets and manage friend connections via a secure request system.
 
-## Available Scripts
+## 🚀 Project Overview
 
-In the project directory, you can run:
+This project demonstrates the integration of **Web3 Authentication** with **Web2 Cloud Storage**. It serves as a Minimum Viable Product (MVP) for a decentralized social directory.
 
-### `npm start`
+**Key Features:**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **No Passwords:** Authentication via MetaMask (Ethers.js).
+- **Real-time Database:** Instant updates using Firebase Firestore.
+- **Social Graph:** Mutual friend connections stored on the cloud.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Tech Stack
 
-### `npm test`
+- **Frontend Library:** React.js (Create React App)
+- **Language:** JavaScript (ES6+, Async/Await)
+- **Blockchain Integration:** Ethers.js (v6)
+- **Authentication:** MetaMask (Injected Web3 Provider)
+- **Database:** Firebase Firestore (NoSQL)
+- **Version Control:** Git & GitHub
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## ⚙️ Features & Implementation Details
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Decentralized Authentication (Login)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Logic:** The app bypasses traditional backend auth servers. It interacts directly with the window.ethereum object injected by MetaMask.
+- **Identifier:** The user's public wallet address (e.g., `0x123...`) is used as the unique Primary Key (Document ID) in the database.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. User Directory
 
-### `npm run eject`
+- Fetches the `users` collection from Firestore.
+- Filters the UI to distinguish between "You" (the logged-in user) and "Others."
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3. Friend Request System (Logic Improvement)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Initial State (Bug/Alpha):** Originally, clicking "Add Friend" instantly added the user to the friend list (unilateral connection).
+- **Current State (Fixed/Final):** Implemented a full 3-step handshake protocol to ensure mutual consent:
+  1.  **Send:** User A clicks "Add Friend" → Adds User A's ID to User B's `incomingRequests` array.
+  2.  **Pending:** User B sees the request in the "Requests" tab.
+  3.  **Accept:** User B clicks "Accept" → Atomic transaction runs to:
+      - Add User A to User B's friend list.
+      - Add User B to User A's friend list.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 4. Profile Management
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Displays the user's connected wallet address.
+- Renders a dynamic list of confirmed friends.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📂 Database Structure (NoSQL)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The data is stored in a single Firestore collection named `users`.
 
-### Code Splitting
+**Schema Example:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# Yield-Voyager-Assignment-1" 
+```json
+"0xWalletAddress123": {
+  "wallet": "0xWalletAddress123",
+  "friends": ["0xWalletAddress456", "0xWalletAddress789"],
+  "incomingRequests": ["0xWalletAddress999"]
+}
+```
